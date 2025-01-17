@@ -1,1 +1,28 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Popup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <button class="btn red" onclick="showPopup('Red'); incrementCounter('red-counter')">Red</button>
+        <p id="red-counter">Clicked: 0 times</p>
+        <button class="btn blue" onclick="showPopup('Blue'); incrementCounter('blue-counter')">Blue</button>
+        <p id="blue-counter">Clicked: 0 times</p>
+    </div>
+
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <p id="popup-text"></p>
+            <button onclick="copyText()">Copy</button>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
