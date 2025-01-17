@@ -1,0 +1,39 @@
+name: File Edit Check
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  check-file-edits:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: List modified files
+      id: modified_files
+      run: |
+        git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+        git diff --name-only origin/${{ github.event.pull_request.base.ref }} > modified_files.txt
+        echo "Modified files:"
+        cat modified_files.txt
+
+    - name: Check for specific file edits
+      id: check_files
+      run: |
+        if grep -q 'request.txt' modified_files.txt; then
+          echo "A request has been made."
+          echo "::set-output name=file_edited::true"
+        else
+          echo "No request were made."
+          echo "::set-output name=file_edited::false"
+        fi
+
+    - name: Conditional action based on file edit
+      if: steps.check_files.outputs.file_edited == 'true'
+      run: |
+        echo "Taking actions."
+        ./increase.sh "$(cat request.txt)"
