@@ -4,7 +4,7 @@ set -eu
 
 [ -z "${1:-}" ] && exit 1
 
-if [ "red" != "$1" ] && [ "blue" = "$1" ]; then
+if [ "red" != "$1" ] && [ "blue" != "$1" ]; then
     exit 1
 fi
 
